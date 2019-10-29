@@ -11,7 +11,8 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/PWP_Mongodb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 });
 
 //Get the default connection

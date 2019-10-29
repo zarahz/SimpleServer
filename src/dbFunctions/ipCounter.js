@@ -1,5 +1,5 @@
 // access db model
-let ipCounter = require("../dbModel/ipCounter");
+let ipCounter = require("../dbModels/ipCounter");
 
 // functions to modify the ip Counter Data
 module.exports = ipCounterFunctions = {

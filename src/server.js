@@ -8,7 +8,7 @@ const server = express();
 const port = 3000;
 
 // use the ipCounter object to access db functions
-const ipCounterFunctions = require("./dbFunction/ipCounter");
+const ipCounterFunctions = require("./dbFunctions/ipCounter");
 
 //whoami functions
 const visitorInfo = require("./utils/visitorInfo");
@@ -20,9 +20,11 @@ server.listen(port, () => {
 
 // default route should show message
 server.get("/", (req, res) => {
-  res.send(`${new Date()}`);
+  // res.send(`${new Date()}`);
+
   // update the counter by the ip address
-  ipCounterFunctions.update(req.socket.address().address);
+  // ipCounterFunctions.update(req.socket.address().address);
+  res.sendFile("./views/Home.html", { root: __dirname });
 });
 
 // route /s shows users IP and its IP family
@@ -57,7 +59,9 @@ server.get("/whoami", (req, res) => {
       message += "location: " + JSON.stringify(values[1]) + "\n\n";
       res.send(message);
     }
-  );
+  ).catch(e => {
+      console.log(e);
+  });
 });
 
 // route /adapt2user with different screens for different
@@ -76,6 +80,10 @@ server.get("/adapt2user", (req, res) => {
   message += `Operating System: ${jokes.osSystem(osSystem)}\n`;
   message += `Language Setting: ${jokes.language(languageSetting)}`;
   res.send(message);
+});
+
+server.get("/trackingPixel", (req, res) => {
+    console.log("getting dem PIXEL!")
 });
 
 // to run the application execute 'npm install' and 'npm start'
