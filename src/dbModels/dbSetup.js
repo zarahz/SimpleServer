@@ -30,7 +30,8 @@ const IPCounterSchema = new Schema({
         type: String,
         unique: true
     },
-    counter: Number
+    counter: Number,
+    pixel_access: Date
   });
 
   module.exports = mongoose.model('ipCounter', IPCounterSchema)

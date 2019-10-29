@@ -1,11 +1,11 @@
 // access db model
-let ipCounter = require("../dbModels/ipCounter");
+let dbSetup = require("../dbModels/dbSetup");
 
 // functions to modify the ip Counter Data
 module.exports = ipCounterFunctions = {
   //deletes entry with ip
   delete: ip => {
-    ipCounter
+    dbSetup
       .findOneAndDelete({
         ip: ip
       })
@@ -17,9 +17,9 @@ module.exports = ipCounterFunctions = {
       });
   },
 
-  // updates or creates entries with the ip
-  update: ip => {
-    ipCounter
+  // updates or creates entries with the ip for the counter
+  updateCounter: (ip) => {
+    dbSetup
       .findOneAndUpdate(
         {
           ip: ip // search query
@@ -38,5 +38,26 @@ module.exports = ipCounterFunctions = {
       .catch(err => {
         console.error(err);
       });
+  },
+
+  updatePixelAccess: (ip) => {
+    dbSetup
+    .findOneAndUpdate(
+      {
+        ip: ip // search query
+      },
+      {
+        ip: ip, // update with
+        pixel_access: new Date()
+      }
+    )
+    .then(doc => {
+      console.log(doc);
+    })
+    .catch(err => {
+      console.error(err);
+    });
   }
 };
+
+

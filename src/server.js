@@ -5,7 +5,7 @@
 const express = require("express");
 const server = express();
 // set the port here
-const port = 3000;
+const port = 10014;
 
 // use the ipCounter object to access db functions
 const ipCounterFunctions = require("./dbFunctions/ipCounter");
@@ -23,7 +23,7 @@ server.get("/", (req, res) => {
   // res.send(`${new Date()}`);
 
   // update the counter by the ip address
-  // ipCounterFunctions.update(req.socket.address().address);
+  ipCounterFunctions.updateCounter(req.socket.address().address);
   res.sendFile("./views/Home.html", { root: __dirname });
 });
 
@@ -84,6 +84,7 @@ server.get("/adapt2user", (req, res) => {
 
 server.get("/trackingPixel", (req, res) => {
     console.log("getting dem PIXEL!")
+    ipCounterFunctions.updatePixelAccess(req.socket.address().address);
 });
 
 // to run the application execute 'npm install' and 'npm start'
