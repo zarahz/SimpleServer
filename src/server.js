@@ -5,7 +5,7 @@
 const express = require("express");
 const server = express();
 // set the port here
-const port = 10014;
+const port = 3000;
 
 // use the ipCounter object to access db functions
 const ipCounterFunctions = require("./dbFunctions/ipCounter");
@@ -25,7 +25,7 @@ server.listen(port, () => {
 server.get("/", (req, res) => {
   
   // update the counter by the ip address
-  // ipCounterFunctions.updateCounter(req.socket.address().address);
+  ipCounterFunctions.updateCounter(req.socket.address().address);
   res.sendFile("./views/Home.html", { root: __dirname });
 });
 
