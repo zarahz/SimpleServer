@@ -10,6 +10,9 @@ const port = 10014;
 // use the ipCounter object to access db functions
 const ipCounterFunctions = require("./dbFunctions/ipCounter");
 
+// use json file for server testing
+const fs = require('fs');
+
 //whoami functions
 const visitorInfo = require("./utils/visitorInfo");
 const jokes = require("./utils/jokes");
@@ -20,8 +23,7 @@ server.listen(port, () => {
 
 // default route should show message
 server.get("/", (req, res) => {
-  // res.send(`${new Date()}`);
-
+  
   // update the counter by the ip address
   ipCounterFunctions.updateCounter(req.socket.address().address);
   res.sendFile("./views/Home.html", { root: __dirname });
@@ -84,7 +86,26 @@ server.get("/adapt2user", (req, res) => {
 
 server.get("/trackingPixel", (req, res) => {
     console.log("getting dem PIXEL!")
-    ipCounterFunctions.updatePixelAccess(req.socket.address().address);
+    // saving data to Json file due to mongo db authorization issues
+    //ipCounterFunctions.updatePixelAccess(req.socket.address().address);
+
+    // Json File: 
+  let file = 'tracking.json';
+
+  // Check that the file exists locally
+  if(!fs.existsSync(file)) {
+    console.log("File not found");
+  }// The file *does* exist
+  else {
+    // Read the file and do anything you want
+    fs.readFile(file, 'utf8', function (err, content) {
+      content = JSON.parse(content.toString())
+      content[req.socket.address().address] = (new Date()).toString();
+      fs.writeFile(file, JSON.stringify(content), function(err, result) {
+         if(err) console.log('error', err);
+       });
+     });
+  }
 });
 
 // to run the application execute 'npm install' and 'npm start'
