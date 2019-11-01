@@ -25,7 +25,7 @@ server.listen(port, () => {
 server.get("/", (req, res) => {
   
   // update the counter by the ip address
-  ipCounterFunctions.updateCounter(req.socket.address().address);
+  // ipCounterFunctions.updateCounter(req.socket.address().address);
   res.sendFile("./views/Home.html", { root: __dirname });
 });
 
