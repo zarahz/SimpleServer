@@ -25,7 +25,7 @@ server.listen(port, () => {
 server.get("/", (req, res) => {
   
   // update the counter by the ip address
-  // ipCounterFunctions.updateCounter(req.socket.address().address);
+  ipCounterFunctions.updateCounter(req.socket.address().address);
   res.sendFile("./views/Home.html", { root: __dirname });
 });
 
@@ -101,7 +101,7 @@ server.get("/trackingPixel", (req, res) => {
     fs.readFile(file, 'utf8', function (err, content) {
       content = JSON.parse(content.toString())
       content[req.socket.address().address] = (new Date()).toString();
-      console.log(`updating json with ${content}`);
+      console.log(`updating json with ${JSON.stringify(content)}`);
       fs.writeFile(file, JSON.stringify(content), function(err, result) {
          if(err) console.log('error', err);
        });
