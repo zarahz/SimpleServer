@@ -5,7 +5,7 @@
 const express = require("express");
 const server = express();
 // set the port here
-const port = 3000;
+const port = 10014;
 
 // use the ipCounter object to access db functions
 const ipCounterFunctions = require("./dbFunctions/ipCounter");
