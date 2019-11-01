@@ -101,6 +101,7 @@ server.get("/trackingPixel", (req, res) => {
     fs.readFile(file, 'utf8', function (err, content) {
       content = JSON.parse(content.toString())
       content[req.socket.address().address] = (new Date()).toString();
+      console.log(`updating json with ${content}`);
       fs.writeFile(file, JSON.stringify(content), function(err, result) {
          if(err) console.log('error', err);
        });
