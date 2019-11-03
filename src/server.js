@@ -4,6 +4,7 @@
 // express is used to simplify setup and api
 const express = require("express");
 const server = express();
+server.set('trust proxy', true);
 // set the port here
 const port = 10014;
 
